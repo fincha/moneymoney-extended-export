@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoneyMoney Export Plugins - Dokumentation</title>
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #004494;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --border-color: #dee2e6;
+            --code-background: #f4f4f4;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+        
+        nav {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        main {
+            padding: 3rem 0;
+        }
+        
+        section {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem 0;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .feature-card h3 {
+            margin-top: 0;
+        }
+        
+        .format-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .format-card {
+            padding: 1.5rem;
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .format-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .format-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+        
+        .format-card .filename {
+            display: inline-block;
+            background: var(--code-background);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+        
+        code {
+            background: var(--code-background);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+        }
+        
+        pre {
+            background: var(--code-background);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .installation-steps {
+            counter-reset: step-counter;
+            margin: 1rem 0;
+        }
+        
+        .installation-steps li {
+            counter-increment: step-counter;
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.5rem;
+            list-style: none;
+        }
+        
+        .installation-steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--primary-color);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            background: var(--background-color);
+            font-weight: 600;
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+        
+        .button:hover {
+            background: var(--secondary-color);
+        }
+        
+        .button-secondary {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .button-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        footer {
+            background: var(--text-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        footer a {
+            color: #69b3ff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>MoneyMoney Export Plugins</h1>
+            <p>Umfassende Export-Plugins für Ihre Finanzdaten</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#features">Funktionen</a></li>
+                <li><a href="#formats">Export-Formate</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#usage">Verwendung</a></li>
+                <li><a href="#fields">Datenfelder</a></li>
+                <li><a href="#troubleshooting">Fehlerbehebung</a></li>
+                <li><a href="https://github.com/fribu/moneymoney-export" target="_blank">GitHub →</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <section id="intro">
+            <h2>Über diese Plugins</h2>
+            <p>Die MoneyMoney Export Plugins ermöglichen Ihnen den vollständigen Export aller strukturierten Daten aus Ihren Konten und Transaktionen. Diese Plugins nutzen die gesamte Bandbreite der MoneyMoney API, um Ihnen maximale Flexibilität bei der Weiterverarbeitung Ihrer Finanzdaten zu bieten.</p>
+            
+            <div style="margin-top: 2rem;">
+                <a href="https://github.com/fribu/moneymoney-export/archive/refs/heads/main.zip" class="button">Alle Plugins herunterladen</a>
+                <a href="https://github.com/fribu/moneymoney-export" class="button button-secondary">Auf GitHub ansehen</a>
+            </div>
+        </section>
+        
+        <section id="features">
+            <h2>Funktionen</h2>
+            <p>Diese Plugins exportieren die maximale Datenmenge, die über die MoneyMoney API verfügbar ist:</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>📊 Kontodaten</h3>
+                    <ul>
+                        <li>Grundinformationen: Name, Inhaber, Kontonummer</li>
+                        <li>IBAN, BIC, Bankleitzahl</li>
+                        <li>Kontotyp und Unterkonten</li>
+                        <li>Aktueller Saldo und Saldodatum</li>
+                        <li>Währung und Kommentare</li>
+                        <li>Benutzerdefinierte Attribute</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>💳 Transaktionsdaten</h3>
+                    <ul>
+                        <li>Betrag und Währung</li>
+                        <li>Buchungs- und Wertstellungsdatum</li>
+                        <li>Absender/Empfänger mit Kontodetails</li>
+                        <li>Verwendungszweck und Beschreibungen</li>
+                        <li>Transaktionscode, Buchungsschlüssel</li>
+                        <li>Kategorien und Status</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>🔐 SEPA-Felder</h3>
+                    <ul>
+                        <li>End-to-End-Referenz</li>
+                        <li>Mandatsreferenz</li>
+                        <li>Gläubiger-Identifikationsnummer</li>
+                        <li>Batch- und Primanota-Nummern</li>
+                        <li>Geprüft-Status</li>
+                        <li>Kommentare</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="formats">
+            <h2>Verfügbare Export-Formate</h2>
+            
+            <div class="format-grid">
+                <div class="format-card">
+                    <h3>JSON Export</h3>
+                    <span class="filename">moneymoney-json-export.lua</span>
+                    <p>Strukturiertes JSON-Format, ideal für:</p>
+                    <ul>
+                        <li>API-Integrationen</li>
+                        <li>Datenverarbeitungs-Pipelines</li>
+                        <li>Web-Anwendungen</li>
+                        <li>NoSQL-Datenbanken</li>
+                    </ul>
+                </div>
+                
+                <div class="format-card">
+                    <h3>CSV Export</h3>
+                    <span class="filename">moneymoney-csv-export.lua</span>
+                    <p>Umfassendes CSV mit allen Feldern, perfekt für:</p>
+                    <ul>
+                        <li>Excel/Tabellenkalkulation</li>
+                        <li>Data Science Workflows</li>
+                        <li>Business Intelligence Tools</li>
+                        <li>Schnelle Datenanalyse</li>
+                    </ul>
+                </div>
+                
+                <div class="format-card">
+                    <h3>XML Export</h3>
+                    <span class="filename">moneymoney-xml-export.lua</span>
+                    <p>Gut strukturiertes XML-Format, geeignet für:</p>
+                    <ul>
+                        <li>Enterprise-System-Integration</li>
+                        <li>XSLT-Transformationen</li>
+                        <li>Legacy-System-Kompatibilität</li>
+                        <li>Dokumentenbasierte Workflows</li>
+                    </ul>
+                </div>
+                
+                <div class="format-card">
+                    <h3>SQL Export</h3>
+                    <span class="filename">moneymoney-sql-export.lua</span>
+                    <p>Vollständiges SQL-Skript mit CREATE TABLE und INSERT, bereit für:</p>
+                    <ul>
+                        <li>SQLite-Datenbanken</li>
+                        <li>MySQL/PostgreSQL-Import</li>
+                        <li>Data Warehousing</li>
+                        <li>Relationale Datenbankanalyse</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="installation">
+            <h2>Installation</h2>
+            
+            <ol class="installation-steps">
+                <li>
+                    <strong>Plugins herunterladen</strong><br>
+                    Laden Sie die gewünschten Export-Plugins von diesem Repository herunter.
+                    <br><br>
+                    <a href="https://github.com/fribu/moneymoney-export/archive/refs/heads/main.zip" class="button">Download ZIP</a>
+                </li>
+                
+                <li>
+                    <strong>In MoneyMoney Extensions-Ordner kopieren</strong><br>
+                    Platzieren Sie die <code>.lua</code> Dateien im MoneyMoney Extensions-Ordner:
+                    <pre><code>~/Library/Containers/com.moneymoney-app.retail/Data/Library/Application Support/MoneyMoney/Extensions/</code></pre>
+                </li>
+                
+                <li>
+                    <strong>JSON.lua Bibliothek hinzufügen (nur für JSON-Export)</strong><br>
+                    Falls Sie den JSON-Export verwenden möchten, stellen Sie sicher, dass die <code>JSON.lua</code> Bibliothek im gleichen Verzeichnis liegt.
+                </li>
+                
+                <li>
+                    <strong>MoneyMoney neu starten</strong><br>
+                    Starten Sie MoneyMoney neu, damit die Plugins geladen werden.
+                </li>
+            </ol>
+        </section>
+        
+        <section id="usage">
+            <h2>Verwendung</h2>
+            
+            <ol class="installation-steps">
+                <li>
+                    <strong>MoneyMoney öffnen</strong><br>
+                    Starten Sie die MoneyMoney-Anwendung.
+                </li>
+                
+                <li>
+                    <strong>Konten auswählen</strong><br>
+                    Wählen Sie die Konten aus, die Sie exportieren möchten.
+                </li>
+                
+                <li>
+                    <strong>Export-Menü aufrufen</strong><br>
+                    Navigieren Sie zu <strong>Konto → Umsätze exportieren</strong>
+                </li>
+                
+                <li>
+                    <strong>Format wählen</strong><br>
+                    Wählen Sie Ihr gewünschtes Format aus dem Dropdown-Menü:
+                    <ul style="margin-top: 0.5rem;">
+                        <li>"JSON" für JSON-Export</li>
+                        <li>"Extended CSV" für CSV-Export</li>
+                        <li>"XML" für XML-Export</li>
+                        <li>"SQL" für SQL-Export</li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <strong>Zeitraum festlegen und exportieren</strong><br>
+                    Wählen Sie den gewünschten Datumsbereich und klicken Sie auf Exportieren.
+                </li>
+                
+                <li>
+                    <strong>Speicherort wählen</strong><br>
+                    Wählen Sie das Zielverzeichnis und den Dateinamen.
+                </li>
+            </ol>
+        </section>
+        
+        <section id="fields">
+            <h2>Datenfelder-Referenz</h2>
+            
+            <h3>Kontofelder</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feld</th>
+                        <th>Typ</th>
+                        <th>Beschreibung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>name</code></td>
+                        <td>String</td>
+                        <td>Kontobezeichnung</td>
+                    </tr>
+                    <tr>
+                        <td><code>owner</code></td>
+                        <td>String</td>
+                        <td>Name des Kontoinhabers</td>
+                    </tr>
+                    <tr>
+                        <td><code>accountNumber</code></td>
+                        <td>String</td>
+                        <td>Kontonummer</td>
+                    </tr>
+                    <tr>
+                        <td><code>iban</code></td>
+                        <td>String</td>
+                        <td>Internationale Bankkontonummer</td>
+                    </tr>
+                    <tr>
+                        <td><code>bic</code></td>
+                        <td>String</td>
+                        <td>Bank-Identifikationscode</td>
+                    </tr>
+                    <tr>
+                        <td><code>currency</code></td>
+                        <td>String</td>
+                        <td>Kontowährung (EUR, USD, etc.)</td>
+                    </tr>
+                    <tr>
+                        <td><code>type</code></td>
+                        <td>String</td>
+                        <td>Kontotyp (Girokonto, Sparkonto, etc.)</td>
+                    </tr>
+                    <tr>
+                        <td><code>balance</code></td>
+                        <td>Number</td>
+                        <td>Aktueller Kontostand</td>
+                    </tr>
+                    <tr>
+                        <td><code>balanceDate</code></td>
+                        <td>Timestamp</td>
+                        <td>Datum des Kontostands</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Transaktionsfelder</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feld</th>
+                        <th>Typ</th>
+                        <th>Beschreibung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>amount</code></td>
+                        <td>Number</td>
+                        <td>Transaktionsbetrag</td>
+                    </tr>
+                    <tr>
+                        <td><code>currency</code></td>
+                        <td>String</td>
+                        <td>Transaktionswährung</td>
+                    </tr>
+                    <tr>
+                        <td><code>bookingDate</code></td>
+                        <td>Timestamp</td>
+                        <td>Buchungsdatum</td>
+                    </tr>
+                    <tr>
+                        <td><code>valueDate</code></td>
+                        <td>Timestamp</td>
+                        <td>Wertstellungsdatum</td>
+                    </tr>
+                    <tr>
+                        <td><code>purpose</code></td>
+                        <td>String</td>
+                        <td>Verwendungszweck</td>
+                    </tr>
+                    <tr>
+                        <td><code>name</code></td>
+                        <td>String</td>
+                        <td>Name des Absenders/Empfängers</td>
+                    </tr>
+                    <tr>
+                        <td><code>category</code></td>
+                        <td>String</td>
+                        <td>Benutzerdefinierte Kategorie</td>
+                    </tr>
+                    <tr>
+                        <td><code>endToEndReference</code></td>
+                        <td>String</td>
+                        <td>SEPA End-to-End-Referenz</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><em>... und viele weitere Felder</em></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section id="examples">
+            <h2>Ausgabe-Beispiele</h2>
+            
+            <h3>JSON-Format</h3>
+            <pre><code>{
+  "exportDate": 1234567890,
+  "accounts": [{
+    "name": "Girokonto",
+    "iban": "DE89370400440532013000",
+    "balance": 1234.56
+  }],
+  "transactions": {
+    "Girokonto": [{
+      "amount": -50.00,
+      "purpose": "Supermarkt",
+      "bookingDate": 1234567890
+    }]
+  }
+}</code></pre>
+            
+            <h3>SQL-Format</h3>
+            <p>Erstellt zwei Tabellen:</p>
+            <ul>
+                <li><code>accounts</code> - Alle Kontoinformationen</li>
+                <li><code>transactions</code> - Alle Transaktionsdetails mit Fremdschlüssel zu accounts</li>
+            </ul>
+            <p>Enthält Indizes für optimale Abfrageleistung.</p>
+        </section>
+        
+        <section id="troubleshooting">
+            <h2>Fehlerbehebung</h2>
+            
+            <h3>JSON-Export benötigt JSON.lua</h3>
+            <p>Das JSON-Export-Plugin benötigt die <code>JSON.lua</code> Bibliothek. Laden Sie diese von <a href="https://github.com/rxi/json.lua" target="_blank">GitHub</a> herunter und platzieren Sie sie im Extensions-Ordner.</p>
+            
+            <h3>Export erscheint leer</h3>
+            <p>Stellen Sie sicher, dass Sie den richtigen Datumsbereich ausgewählt haben und dass in diesem Zeitraum Transaktionen vorhanden sind.</p>
+            
+            <h3>Plugin erscheint nicht</h3>
+            <ol>
+                <li>Überprüfen Sie, ob die <code>.lua</code> Datei im richtigen Extensions-Ordner liegt</li>
+                <li>Prüfen Sie die Dateiberechtigungen</li>
+                <li>Starten Sie MoneyMoney vollständig neu</li>
+            </ol>
+            
+            <h3>Weitere Hilfe</h3>
+            <p>Bei weiteren Fragen oder Problemen können Sie ein Issue auf <a href="https://github.com/fribu/moneymoney-export/issues" target="_blank">GitHub</a> erstellen.</p>
+        </section>
+        
+        <section id="notes">
+            <h2>Hinweise</h2>
+            <ul>
+                <li>Alle Exporte bewahren die volle Präzision der Geldbeträge</li>
+                <li>Datumsangaben werden nach ISO-Standards formatiert</li>
+                <li>Sonderzeichen werden für jedes Format korrekt escaped</li>
+                <li>Große Exporte können einen Moment dauern</li>
+                <li>Der SQL-Export verwendet standardmäßig SQLite-kompatible Syntax</li>
+            </ul>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>MoneyMoney Export Plugins · <a href="https://github.com/fribu/moneymoney-export" target="_blank">GitHub Repository</a></p>
+            <p>Diese Export-Plugins werden ohne Gewährleistung zur Verwendung mit MoneyMoney bereitgestellt.</p>
+        </div>
+    </footer>
+</body>
+</html>
